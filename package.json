@@ -1,0 +1,42 @@
+{
+  "name": "ngx-typed-routes",
+  "version": "1.0.0",
+  "description": "Compile-time-safe route paths and i18n route maps for Angular. Catches typo'd/stale route strings at build time instead of at runtime navigation.",
+  "type": "module",
+  "main": "./dist/public-api.js",
+  "module": "./dist/public-api.js",
+  "types": "./dist/public-api.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/public-api.d.ts",
+      "default": "./dist/public-api.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "npm run build",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "keywords": [
+    "angular",
+    "router",
+    "routes",
+    "typescript",
+    "type-safety",
+    "route-map",
+    "i18n"
+  ],
+  "peerDependencies": {
+    "typescript": ">=5.0.0"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "typescript": "^7.0.2"
+  }
+}
