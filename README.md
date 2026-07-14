@@ -1,4 +1,4 @@
-# ngx-typed-routes
+# ngx-safe-routes
 
 Compile-time-safe route paths for Angular. Define your routes once as a
 plain nested object; every segment, absolute path, and i18n route-mapping
@@ -21,13 +21,13 @@ you write the route definition, not at runtime.
 ## Install
 
 ```bash
-npm install ngx-typed-routes
+npm install ngx-safe-routes
 ```
 
 ## Basic usage
 
 ```ts
-import { defineRoutes } from 'ngx-typed-routes';
+import { defineRoutes } from 'ngx-safe-routes';
 
 export const AccountingRoutes = defineRoutes({
   dashboard: 'dashboard',
@@ -82,7 +82,7 @@ this.router.navigate([AccountingRoutes.settings.fullPath], {
 ## Parameterized routes
 
 ```ts
-import { buildPath } from 'ngx-typed-routes';
+import { buildPath } from 'ngx-safe-routes';
 
 buildPath(AccountingRoutes.users.children.detail.fullPath, { id: user.id });
 // '/users/detail/42'
@@ -100,7 +100,7 @@ you never declare a params type separately from the route.
 ## Route translations
 
 ```ts
-import { defineRouteTranslations, findTranslateKey } from 'ngx-typed-routes';
+import { defineRouteTranslations, findTranslateKey } from 'ngx-safe-routes';
 
 export const AccountingRouteTranslations = defineRouteTranslations(AccountingRoutes, [
   { route: AccountingRoutes.dashboard.fullPath, translateKey: 'dashboard.title' },
