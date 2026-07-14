@@ -1,6 +1,4 @@
-import { buildPath, defineRoutes, defineRouteTranslations } from '../src/public-api';
-
-// --- Equivalent of image 1: the route registry -----------------------------
+import { buildPath, defineRoutes } from '../src/public-api';
 
 export const AccountingRoutes = defineRoutes({
   dashboard: 'dashboard',
@@ -34,29 +32,6 @@ AccountingRoutes.users.children.roleList.fullPath; // '/users/role-list'
 AccountingRoutes.bank.children.bankList.segment; // 'bank-list'  (bare segment for Routes config)
 AccountingRoutes.bank.children.bankList.fullPath; // '/bank/bank-list' (absolute path for navigate)
 
-// --- Equivalent of image 2: RouteTranslations -------------------------------
-// The `route` field is now checked against real routes at compile time.
-
-export const AccountingRouteTranslations = defineRouteTranslations(AccountingRoutes, [
-  { route: AccountingRoutes.dashboard.fullPath, translateKey: 'dashboard.title' },
-  { route: AccountingRoutes.accessDenied.fullPath, translateKey: 'accessDenied.accessDenied' },
-  {
-    route: AccountingRoutes.users.children.roleList.fullPath,
-    translateKey: 'accountingCodes.chartOfAccounts',
-  },
-  {
-    route: AccountingRoutes.users.children.userList.fullPath,
-    translateKey: 'accountingCodes.detailedAccount',
-  },
-]);
-
-// Uncomment to see the compile-time check this adds over a plain `string` field:
-// defineRouteTranslations(AccountingRoutes, [
-//   { route: '/dashbord', translateKey: 'dashboard.title' }, // Type error: not a valid route
-// ]);
-
-// --- Equivalent of image 3: router.navigate ---------------------------------
-
 declare const router: { navigate: (commands: string[], extras?: unknown) => void };
 const defaultCategory = 'general';
 
@@ -67,8 +42,6 @@ router.navigate([AccountingRoutes.settings.fullPath], {
 // Parameterized navigation:
 router.navigate([buildPath(AccountingRoutes.users.children.detail.fullPath, { id: 42 })]);
 // buildPath(AccountingRoutes.dashboard.fullPath, { id: 1 }); // Type error: dashboard takes no params
-
-// --- Equivalent of image 4: routing module -----------------------------------
 
 declare const permissionGuard: unknown;
 declare const PermissionList: { BasicInfo: { Bank: { ViewList: unknown }; BankAccount: { ViewList: unknown } } };
