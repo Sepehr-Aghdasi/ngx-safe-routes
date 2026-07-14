@@ -1,5 +1,5 @@
 {
-  "name": "ngx-typed-routes",
+  "name": "ngx-safe-routes",
   "version": "1.0.0",
   "description": "Compile-time-safe route paths and i18n route maps for Angular. Catches typo'd/stale route strings at build time instead of at runtime navigation.",
   "type": "module",
