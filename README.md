@@ -1,9 +1,9 @@
 # ngx-safe-routes
 
 Compile-time-safe route paths for Angular. Define your routes once as a
-plain nested object; every segment, absolute path, and i18n route-mapping
-entry is checked by the TypeScript compiler afterward — so a typo'd or
-renamed route fails `tsc`, not a click in the browser.
+plain nested object; every segment and absolute path is checked by the
+TypeScript compiler afterward — so a typo'd or renamed route fails `tsc`,
+not a click in the browser.
 
 Angular's `Routes` array and `router.navigate()` both take plain strings,
 so there's nothing stopping `path: 'bank-lsit'` or a stale
@@ -17,12 +17,6 @@ you write the route definition, not at runtime.
 > No runtime dependency on `@angular/core` or `@angular/router` — it's
 > plain TypeScript, so it works with any Angular build system (CLI,
 > esbuild, custom webpack) without extra configuration.
-
-## Install
-
-```bash
-npm install ngx-safe-routes
-```
 
 ## Basic usage
 
@@ -97,28 +91,6 @@ buildPath(AccountingRoutes.users.children.detail.fullPath);
 Params are inferred straight from the path string's `:param` segments —
 you never declare a params type separately from the route.
 
-## Route translations
-
-```ts
-import { defineRouteTranslations, findTranslateKey } from 'ngx-safe-routes';
-
-export const AccountingRouteTranslations = defineRouteTranslations(AccountingRoutes, [
-  { route: AccountingRoutes.dashboard.fullPath, translateKey: 'dashboard.title' },
-  { route: AccountingRoutes.users.children.roleList.fullPath, translateKey: 'accountingCodes.chartOfAccounts' },
-]);
-
-// { route: '/dashbord', translateKey: '...' } would fail to compile —
-// 'route' only accepts paths that actually exist in AccountingRoutes.
-
-// Runtime lookup, e.g. in a title/breadcrumb resolver on NavigationEnd:
-const key = findTranslateKey(this.router.url, AccountingRouteTranslations);
-```
-
-This is the one piece a hand-rolled static class usually can't do cheaply:
-the array's `route` field is a union of every real path in your tree, so
-a rename that forgets to update the translation map is a compile error,
-not a blank breadcrumb in production.
-
 ## Migrating from a hand-written static class
 
 If you currently have:
@@ -148,14 +120,6 @@ of sync with the segments it's built from.
 ## API reference
 
 - `defineRoutes(definition)` — builds the frozen route tree.
-- `defineRouteTranslations(routes, translations)` — type-checks a
-  route → i18n-key array against a route tree.
-- `findTranslateKey(url, translations)` — runtime lookup by exact `fullPath`.
 - `buildPath(fullPath, params?)` — interpolates `:param` placeholders,
   with `params` type-inferred from the path.
-- Types: `RouteNode`, `RouteTree`, `RouteDefinition`, `RouteParams<Path>`,
-  `AllPaths<T>`.
-
-## License
-
-MIT
+- Types: `RouteNode`, `RouteTree`, `RouteDefinition`, `RouteParams<Path>`.
