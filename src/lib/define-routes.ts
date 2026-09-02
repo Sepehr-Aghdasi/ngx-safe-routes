@@ -1,28 +1,28 @@
 import { RouteBranchDefinition, RouteDefinitionMap, RouteTree } from './types';
 
 /**
-    * Builds a frozen, type-safe route tree from a plain definition object.
-    *
-    * Each entry is either a bare segment string (leaf) or `{ path, children }`
-    * (branch). The absolute `fullPath` of every node is derived automatically —
-    * you never write `/${parent}/${child}` by hand.
-    *
-    * @example
-    * const Routes = defineRoutes({
-    *   dashboard: 'dashboard',
-    *   users: {
-    *     path: 'users',
-    *     children: {
-    *       roleList: 'role-list',
-    *       userList: 'user-list',
-    *     },
-    *   },
-    * });
-    *
-    * Routes.dashboard.segment            // 'dashboard'
-    * Routes.dashboard.fullPath           // '/dashboard'
-    * Routes.users.children.roleList.fullPath // '/users/role-list'
-    */
+ * Builds a frozen, type-safe route tree from a plain definition object.
+ *
+ * Each entry is either a bare segment string (leaf) or `{ path, children }`
+ * (branch). The absolute `fullPath` of every node is derived automatically —
+ * you never write `/${parent}/${child}` by hand.
+ *
+ * @example
+ * const Routes = defineRoutes({
+ *   dashboard: 'dashboard',
+ *   users: {
+ *     path: 'users',
+ *     children: {
+ *       roleList: 'role-list',
+ *       userList: 'user-list',
+ *     },
+ *   },
+ * });
+ *
+ * Routes.dashboard.segment            // 'dashboard'
+ * Routes.dashboard.fullPath           // '/dashboard'
+ * Routes.users.children.roleList.fullPath // '/users/role-list'
+ */
 export function defineRoutes<const T extends RouteDefinitionMap>(
     definition: T,
     parentPath: string = '',
