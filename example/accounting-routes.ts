@@ -1,28 +1,28 @@
 import { buildPath, defineRoutes } from '../src/public-api';
 
 export const AccountingRoutes = defineRoutes({
-  dashboard: 'dashboard',
-  accessDenied: 'access-denied',
-  notFound: 'not-found',
-  welcome: 'welcome',
-  loginCallback: 'login-callback',
-  settings: 'settings',
-  users: {
-    path: 'users',
-    children: {
-      roleList: 'role-list',
-      userList: 'user-list',
-      detail: 'detail/:id', // parameterized child, not in the original screenshot — shows param support
+    dashboard: 'dashboard',
+    accessDenied: 'access-denied',
+    notFound: 'not-found',
+    welcome: 'welcome',
+    loginCallback: 'login-callback',
+    settings: 'settings',
+    users: {
+        path: 'users',
+        children: {
+            roleList: 'role-list',
+            userList: 'user-list',
+            detail: 'detail/:id', // parameterized child, not in the original screenshot — shows param support
+        },
     },
-  },
-  bank: {
-    path: 'bank',
-    children: {
-      bankList: 'bank-list',
-      bankAccountList: 'bank-account-list',
-      cashAccountList: 'cash-account-list',
+    bank: {
+        path: 'bank',
+        children: {
+            bankList: 'bank-list',
+            bankAccountList: 'bank-account-list',
+            cashAccountList: 'cash-account-list',
+        },
     },
-  },
 });
 
 // No more `/${this.USERS}/${this.ROLE_LIST}` by hand:
@@ -36,7 +36,7 @@ declare const router: { navigate: (commands: string[], extras?: unknown) => void
 const defaultCategory = 'general';
 
 router.navigate([AccountingRoutes.settings.fullPath], {
-  queryParams: { category: defaultCategory },
+    queryParams: { category: defaultCategory },
 });
 
 // Parameterized navigation:
@@ -47,16 +47,16 @@ declare const permissionGuard: unknown;
 declare const PermissionList: { BasicInfo: { Bank: { ViewList: unknown }; BankAccount: { ViewList: unknown } } };
 
 export const bankRoutes = [
-  {
-    path: AccountingRoutes.bank.children.bankList.segment, // bare segment, not fullPath
-    loadChildren: () => import('./bank-list.module').then((m) => (m as any).BankListModule),
-    canActivate: [permissionGuard],
-    data: { permission: PermissionList.BasicInfo.Bank.ViewList },
-  },
-  {
-    path: AccountingRoutes.bank.children.bankAccountList.segment,
-    loadChildren: () => import('./bank-account-list.module').then((m) => (m as any).BankAccountListModule),
-    canActivate: [permissionGuard],
-    data: { permission: PermissionList.BasicInfo.BankAccount.ViewList },
-  },
+    {
+        path: AccountingRoutes.bank.children.bankList.segment, // bare segment, not fullPath
+        loadChildren: () => import('./bank-list.module').then((m) => (m as any).BankListModule),
+        canActivate: [permissionGuard],
+        data: { permission: PermissionList.BasicInfo.Bank.ViewList },
+    },
+    {
+        path: AccountingRoutes.bank.children.bankAccountList.segment,
+        loadChildren: () => import('./bank-account-list.module').then((m) => (m as any).BankAccountListModule),
+        canActivate: [permissionGuard],
+        data: { permission: PermissionList.BasicInfo.BankAccount.ViewList },
+    },
 ];
